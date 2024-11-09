@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-public class ArrayListIntByPavel implements IntList{
+public class ArrayListIntByPavel implements IntList {
     private Integer[] array;
     private int size;
     private final int factSize = 256;
@@ -19,6 +19,9 @@ public class ArrayListIntByPavel implements IntList{
 
     @Override
     public void add(Integer item) {
+        if (size == factSize) {
+            grow();
+        }
         array[size] = item;
         size++;
     }
@@ -33,7 +36,10 @@ public class ArrayListIntByPavel implements IntList{
     @Override
     public void add(int index, Integer item) {
         checkIndex(index);
-        for (int i = size; i > index; i--){
+        if (size == factSize) {
+            grow();
+        }
+        for (int i = size; i > index; i--) {
             array[i] = array[i - 1];
         }
         array[index] = item;
@@ -65,8 +71,8 @@ public class ArrayListIntByPavel implements IntList{
 
     @Override
     public int indexOf(Integer item) {
-        for (int i = 0; i < size; i++){
-            if (this.array[i].equals(item)){
+        for (int i = 0; i < size; i++) {
+            if (this.array[i].equals(item)) {
                 return i;
             }
         }
@@ -75,8 +81,8 @@ public class ArrayListIntByPavel implements IntList{
 
     @Override
     public int lastIndexOf(Integer item) {
-        for (int i = size - 1; i > -1; i--){
-            if (this.array[i].equals(item)){
+        for (int i = size - 1; i > -1; i--) {
+            if (this.array[i].equals(item)) {
                 return i;
             }
         }
@@ -94,8 +100,8 @@ public class ArrayListIntByPavel implements IntList{
         if (size != otherList.size()) {
             return false;
         }
-        for (int i = 0; i < size; i++){
-            if (!this.array[i].equals(otherList.get(i))){
+        for (int i = 0; i < size; i++) {
+            if (!this.array[i].equals(otherList.get(i))) {
                 return false;
             }
         }
@@ -125,7 +131,7 @@ public class ArrayListIntByPavel implements IntList{
 
     @Override
     public void sort() {
-        Arrays.sort(array, 0, size);
+        quickSort(0, size - 1);
     }
 
     @Override
@@ -145,4 +151,37 @@ public class ArrayListIntByPavel implements IntList{
         }
         return -1;
     }
+
+    public void quickSort(int begin, int end) {
+        if (begin < end) {
+            int pivot = sortByPivot(begin, end);
+            quickSort(begin, pivot - 1);
+            quickSort(pivot + 1, end);
+        }
+    }
+
+    public int sortByPivot(int begin, int end) {
+        int pivot = array[end];
+        int i = begin - 1;
+        for (int j = begin; j < end; j++) {
+            if (array[j] <= pivot) {
+                i += 1;
+                int temp = array[j];
+                array[j] = array[i];
+                array[i] = temp;
+            }
+        }
+        int temp = array[end];
+        array[end] = array[i + 1];
+        array[i + 1] = temp;
+        return i + 1;
+
+    }
+
+    private void grow() {
+        Integer[] newarr = new Integer[(int) (factSize * 1.5)];
+        System.arraycopy(array, 0, newarr, 0, size);
+        this.array = newarr;
+    }
+
 }
