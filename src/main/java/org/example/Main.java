@@ -1,9 +1,37 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-
+        ArrayListByPavel arr = new ArrayListByPavel();
+        arr.add("Hello");
+        arr.add("World");
+        arr.add("Java");
+        arr.add("Python");
+        arr.add("C");
+        arr.add("C++");
+        arr.add("C#");
+        arr.add("C++");
+        arr.add("C");
+        arr.add("C++");
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println(arr.get(i));
+        }
+        System.out.println(arr.size());
+        arr.add(5, "Hi");
+        arr.set(0, "World");
+        arr.remove("Python");
+        arr.remove(0);
+        arr.add("World");
+        System.out.println(arr.indexOf("World"));
+        System.out.println(arr.lastIndexOf("World"));
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println(arr.get(i));
+        }
+        System.out.println(arr.size());
+        arr.clear();
+        arr.add("Hello");
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println(arr.get(i));
+        }
     }
 }
